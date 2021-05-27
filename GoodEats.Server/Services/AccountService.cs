@@ -1,3 +1,4 @@
+using System;
 using GoodEats.Models;
 using GoodEats.Repositories;
 
@@ -10,6 +11,8 @@ namespace GoodEats.Services
         {
             _repo = repo;
         }
+
+
 
         internal string GetProfileEmailById(string id)
         {
@@ -27,6 +30,11 @@ namespace GoodEats.Services
                 return _repo.Create(userInfo);
             }
             return profile;
+        }
+
+        internal Profile GetProfileById(string id)
+        {
+            return _repo.GetById(id);
         }
 
         internal Account Edit(Account editData, string userEmail)

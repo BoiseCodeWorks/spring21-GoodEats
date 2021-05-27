@@ -45,9 +45,11 @@ namespace GoodEats.Server
             // REPOS
             services.AddScoped<AccountsRepository>();
             services.AddTransient<RestaurantsRepository>();
+            services.AddTransient<ReviewsRepository>();
             // BL
             services.AddScoped<AccountService>();
             services.AddTransient<RestaurantsService>();
+            services.AddTransient<ReviewsService>();
 
 
         }

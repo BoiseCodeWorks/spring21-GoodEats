@@ -8,10 +8,12 @@ namespace GoodEats.Services
     public class RestaurantsService
     {
         private readonly RestaurantsRepository _rp;
+        private readonly ReviewsRepository _reviewsRepo;
 
-        public RestaurantsService(RestaurantsRepository rp)
+        public RestaurantsService(RestaurantsRepository rp, ReviewsRepository reviewsRepo)
         {
             _rp = rp;
+            _reviewsRepo = reviewsRepo;
         }
 
         internal Restaurant Create(Restaurant r)
@@ -42,22 +44,35 @@ namespace GoodEats.Services
 
             return _rp.Update(r);
         }
-        internal void Remove(int id, string userId)
+
+        internal Restaurant Get(int id)
         {
-            // Business Logic
-            Restaurant restaurant = _rp.GetById(id);
-
-            // let x = findOneAndUpdate({userId: userId, id: id}, update)
-
-            if (restaurant == null)
+            var r = _rp.GetById(id);
+            if (r == null)
             {
                 throw new Exception("Invalid Id");
             }
+            return r;
+        }
+
+        internal void Remove(int id, string userId)
+        {
+            // Business Logic
+            // REVIEW notice I can re-use my own coolness
+            Restaurant restaurant = Get(id);
+
+            // let x = findOneAndUpdate({userId: userId, id: id}, update)
+
             if (restaurant.OwnerId != userId)
             {
                 throw new Exception("You are not allowed to delete because you do not own this r");
             }
             _rp.Remove(id);
+        }
+
+        internal List<Review> GetReviews(int restaurantId)
+        {
+            return _reviewsRepo.GetReviews(restaurantId);
         }
     }
 }

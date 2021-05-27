@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS restaurants(
   FOREIGN KEY (ownerId) REFERENCES accounts(id) ON DELETE CASCADE
 ) default charset utf8 COMMENT '';
 CREATE TABLE IF NOT EXISTS reviews(
-  id INT NOT NULL primary key COMMENT 'primary key',
+  id INT NOT NULL AUTO_INCREMENT  primary key COMMENT 'primary key',
   creatorId VARCHAR(255) NOT NULL COMMENT 'FK: User Account',
   restaurantId INT NOT NULL COMMENT 'FK: User Account',
   title varchar(255) NOT NULL COMMENT 'Review Title',
@@ -27,3 +27,5 @@ CREATE TABLE IF NOT EXISTS reviews(
   FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE,
   FOREIGN KEY (restaurantId) REFERENCES restaurants(id) ON DELETE CASCADE
 ) default charset utf8 COMMENT '';
+
+DROP TABLE reviews;

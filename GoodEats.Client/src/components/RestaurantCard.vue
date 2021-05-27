@@ -12,19 +12,23 @@
       </button>
     </div>
     <div class="card-body">
-      <h3>
-        {{ restaurant.name }}
-      </h3>
+      <router-link :to="{name: 'Restaurant', params: {id: restaurant.id}}">
+        <h3>
+          {{ restaurant.name }}
+        </h3>
+      </router-link>
       <em>
         <i class="mdi mdi-map-marker"></i>
         {{ restaurant.location }}
       </em>
     </div>
     <div class="mt-2 text-right">
-      <img :src="restaurant.owner.picture" height="40" class="rounded-circle mr-2" alt="">
-      <small>
-        {{ restaurant.owner.name }}
-      </small>
+      <router-link :to="{name: 'Profile', params: {id: restaurant.ownerId }}">
+        <img :src="restaurant.owner.picture" height="40" class="rounded-circle mr-2" alt="">
+        <small>
+          {{ restaurant.owner.name }}
+        </small>
+      </router-link>
     </div>
   </div>
 </template>

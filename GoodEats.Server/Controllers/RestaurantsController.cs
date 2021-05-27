@@ -34,6 +34,34 @@ namespace GoodEats.Controllers
             }
         }
 
+        [HttpGet("{id}")]
+        public ActionResult<Restaurant> Get(int id)
+        {
+            try
+            {
+                Restaurant restaurant = _rs.Get(id);
+                return Ok(restaurant);
+            }
+            catch (System.Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("{id}/reviews")]
+        public ActionResult<List<Review>> GetReviews(int id)
+        {
+            try
+            {
+                List<Review> reviews = _rs.GetReviews(id);
+                return Ok(reviews);
+            }
+            catch (System.Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
 
         [Authorize]
         [HttpPost]

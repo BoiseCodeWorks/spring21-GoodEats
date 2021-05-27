@@ -4,5 +4,9 @@ import { reactive } from 'vue'
 export const AppState = reactive({
   user: {},
   account: {},
-  restaurants: []
+  // REVIEW vvv THIS HAS NOTHING TO DO WITH AUTH
+  profile: {},
+  restaurants: [],
+  reviews: [],
+  activeRestaurant: {}
 })

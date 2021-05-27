@@ -30,8 +30,18 @@ namespace GoodEats.Repositories
 
         internal Restaurant GetById(int id)
         {
-            string sql = "SELECT * FROM restaurants WHERE id = @id";
-            return _db.QueryFirstOrDefault<Restaurant>(sql, new { id });
+            string sql = @"
+            SELECT 
+                r.*, 
+                a.* 
+            FROM restaurants r 
+            JOIN accounts a ON a.id = r.ownerId
+            WHERE r.id = @id";
+            return _db.Query<Restaurant, Account, Restaurant>(sql, (r, a) =>
+            {
+                r.Owner = a;
+                return r;
+            }, new { id }).FirstOrDefault();
         }
 
         internal List<Restaurant> GetAll()
