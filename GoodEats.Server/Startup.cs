@@ -43,9 +43,11 @@ namespace GoodEats.Server
             services.AddScoped<IDbConnection>(x => CreateDbConnection());
 
             // REPOS
-            services.AddScoped<AccountsRepository>();        
+            services.AddScoped<AccountsRepository>();
+            services.AddTransient<RestaurantsRepository>();
             // BL
-            services.AddScoped<AccountService>();        
+            services.AddScoped<AccountService>();
+            services.AddTransient<RestaurantsService>();
 
 
         }
@@ -101,7 +103,7 @@ namespace GoodEats.Server
             }
 
             app.UseHttpsRedirection();
-            
+
             // NOTE use to serve your built client
             app.UseDefaultFiles();
             app.UseStaticFiles();
