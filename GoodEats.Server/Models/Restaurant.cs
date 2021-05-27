@@ -16,7 +16,7 @@ namespace GoodEats.Models
         [MinLength(1)]
         public string Location { get; set; }
         public string OwnerId { get; set; }
-        // NOTE Virtual
+        // NOTE Virtual use profile not account
         public Profile Owner { get; set; }
     }
 }
