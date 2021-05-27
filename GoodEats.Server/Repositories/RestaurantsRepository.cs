@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using Dapper;
 using GoodEats.Models;
 
@@ -24,6 +26,49 @@ namespace GoodEats.Repositories
             ";
             r.Id = _db.ExecuteScalar<int>(sql, r);
             return r;
+        }
+
+        internal Restaurant GetById(int id)
+        {
+            string sql = "SELECT * FROM restaurants WHERE id = @id";
+            return _db.QueryFirstOrDefault<Restaurant>(sql, new { id });
+        }
+
+        internal List<Restaurant> GetAll()
+        {
+            string sql = @"
+            SELECT 
+            r.*,
+            a.* 
+            FROM restaurants r
+            JOIN accounts a ON r.ownerId = a.id;";
+            // REVIEW item1 = r item2 = a, what returns
+            return _db.Query<Restaurant, Profile, Restaurant>(sql,
+            // similar to array.map
+            (r, a) =>
+            {
+                r.Owner = a;
+                return r;
+            }, splitOn: "id").ToList();
+        }
+
+        internal Restaurant Update(Restaurant r)
+        {
+            string sql = @"
+            UPDATE restaurants 
+            SET 
+                name = @Name,
+                location = @Location
+            WHERE id = @Id;
+            ";
+            _db.Execute(sql, r);
+            return r;
+        }
+
+        internal void Remove(int id)
+        {
+            string sql = "DELETE FROM restaurants WHERE id = @id LIMIT 1;";
+            _db.Execute(sql, new { id });
         }
     }
 }

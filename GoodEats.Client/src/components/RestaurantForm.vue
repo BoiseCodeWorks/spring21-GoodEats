@@ -42,9 +42,14 @@ export default {
       handleSubmit() {
         if (this.editable.id) {
           // update
+          restaurantsService.update(editable.value)
         } else {
           // create
           restaurantsService.create(editable.value)
+        }
+        this.editable = {
+          name: '',
+          location: ''
         }
       }
     })
