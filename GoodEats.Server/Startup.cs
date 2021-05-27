@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using GoodEats.Repositories;
+using GoodEats.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -39,6 +41,12 @@ namespace GoodEats.Server
             });
 
             services.AddScoped<IDbConnection>(x => CreateDbConnection());
+
+            // REPOS
+            services.AddScoped<AccountsRepository>();        
+            // BL
+            services.AddScoped<AccountService>();        
+
 
         }
 
